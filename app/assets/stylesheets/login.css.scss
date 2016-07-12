@@ -1,0 +1,35 @@
+a.nohover { 
+	&:hover {
+    	color: green;
+    	background-color: inherit;
+	}  
+}
+
+.nohover-black { 
+	&:hover {
+    	color: black;
+    	background-color: inherit;
+    	text-decoration:none;
+	}  
+}
+
+// h4 {
+
+// 	color:black;
+// }
+
+.login-rememberme {
+	position:relative;
+	left:20px;
+	width:126px;
+
+}
+
+.media-heading {
+	margin-left: auto;
+  	margin-right: auto;
+	width: 150px;
+	text-decoration: blink;
+	font-size: 20px;
+	font-style: italic;
+}

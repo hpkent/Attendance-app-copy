@@ -1,0 +1,38 @@
+<%= form_for(@user, :url => users_create_user_path) do |f| %>
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> could not register the new user:</h2>
+    
+          <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+    <% end %>
+ 
+ 
+  <div class="form-group">
+    <p><%= f.label :email %></p>
+    <p><%= f.email_field :email ,class: 'form-control' %></p>
+  </div>
+
+  <div class="form-group">
+    <p><%= f.label :password %></p>
+    <p><%= f.password_field :password, class: 'form-control' %></p>
+  </div>
+
+  <div class="form-group">
+    <p><%= f.label :password_confirmation %></p>
+    <p><%= f.password_field :password_confirmation, class: 'form-control' %></p>
+  </div>
+
+  <div class="form-group">
+    <p><%= f.label :role %></p>
+    <p><%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}, class: 'form-control') %></p>
+  </div>
+
+    
+
+  <p><%= f.submit "Add User", class:"btn btn-primary"    %></p>
+<% end %>

@@ -1,0 +1,82 @@
+<div class="container" id="splash-body">
+    <div class="span6">
+        <center>
+       <!--  <a href="#bob" data-toggle="modal" data-target="#myModal"><%= image_tag("video_record.png",name:"aboutme",width:"140",height:"140",
+         class:"img-circle") %></a> -->
+        <!-- <img src="video_record.png" name="aboutme" width="140" height="140" class="img-circle"></a> -->
+        
+        <!-- <h4><a href="aboutModal" data-toggle="modal" data-target="#myModal" class="btn btn-primary">Sign In<a/></h3> -->
+        <h3>WWZC Attendance App</h3>
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+          Login
+        </button>
+
+    </center>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title nohover-black" id="myModalLabel">VIMP Sidecar <small>by Eventkaddy.</small></h4>
+                </div> -->
+                <div class="modal-body">
+                    <!-- <center> -->
+                    
+                      <div class="authform">
+                        <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f| %>
+                         <h3 class="nohover-black">WWZC Attendance</h3>
+                          <h3 class="nohover-black">Sign in</h3>
+                          <%= devise_error_messages! %>
+                          <div class="form-group">
+                            <% if devise_mapping.registerable? %>
+                             <!-- <p><%= link_to 'Sign up', new_registration_path(resource_name), class: 'right'  %></p> -->
+                             
+                            <% end %>
+                            <%= f.label :email %>
+                            <p>(hint: schedule)</p>
+                            <%= f.email_field :email, :autofocus => true, class: 'form-control' %>
+                          </div>
+                          <div class="form-group">
+                          <% if devise_mapping.recoverable? %>
+                              <!-- <p><%= link_to "Forgot password?", new_password_path(resource_name), class: 'right' %></p>  -->
+                            <% end %>
+                            
+                            <%= f.label :password %>
+                            <p>(hint: zz)</p>
+                            <%= f.password_field :password, class: 'form-control' %>
+                          </div>
+                          <%= f.submit 'Sign in', :class => 'button right' %>
+                          
+                          <% if devise_mapping.rememberable? -%>
+                                <div class="checkbox login-rememberme">
+                                  <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+                                </div>
+                          <% end -%>
+                        <% end %>
+                      </div>
+
+                      <!--<%= image_tag("video_record.png",name:"aboutme",width:"140",height:"140",class:"img-circle") %>-->
+                      <!-- <div class="media-heading">WWZC Attendance Tracker</div> -->
+                    
+
+                    <hr>
+                <!--     <center>
+                    <p class="text-left"><br>
+                        Please contact hpkent@gmail.com for a new account.</p>
+                    <br>
+                    </center> -->
+                </div>
+                <div class="modal-footer">
+                    <center>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
