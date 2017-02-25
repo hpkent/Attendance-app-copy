@@ -1,0 +1,60 @@
+<div class ="container-fluid">
+
+    <div class="col-xs-12 col-md-5 well">
+        <h2>Select a Sitting</h2>
+        <h5>Please select a sitting from one of the two following lists:</h5>
+
+        <%= form_for(@students_sittings, :url => {:action => "update_sitting"}) do |f| %>
+            
+            <h4> Today's sittings</h4>
+            <div class="field">
+                <%= collection_select(:students_sittings, :sitting_id, @sitting, :id, :sitting_info) %>
+            </div>
+            <div id= "buttonId" class="actions">
+                <%= f.submit "Submit", class:"btn btn-primary btn-padded" %>
+        <%end%> 
+            </div>
+        <%= form_for(@students_sittings, :url => {:action => "update_sitting"}) do |f| %>
+          <h4> All sittings</h4>
+            <div class="field">
+                <%= collection_select(:students_sittings, :sitting_id, @all_sittings, :id, :sitting_info) %>
+            </div>
+            <div id= "buttonId" class="actions">
+                <%= f.submit "Submit", class:"btn btn-padded btn-primary" %>
+        <%end%> 
+            </div>
+
+        <div class="btn">
+            <%=link_to 'Refresh Calendar Data', sittings_refresh_path, class:"btn btn-default btn-xs"%>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+
+    <div id="links" class="col-xs-12">
+            <%=button_to 'Record special meetings', meetings_show_other_path, :class => "btn btn-primary btn-padded"%>
+    </div>
+
+    <div id="links" class="col-xs-12">
+        <%=button_to 'Manage students', students_manage_students_path, :class => "btn btn-primary btn-padded"%> 
+    </div>
+
+    <div id="links" class="col-xs-12">
+        <%=button_to 'Manage groups', groups_manage_groups_path, :class => "btn btn-primary btn-padded" %> 
+    </div>
+    <div id="links" class="col-xs-12">
+        <%=button_to 'Sign out', destroy_user_session_path, :method=>'delete', :class => "btn btn-primary btn-padded" %>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+

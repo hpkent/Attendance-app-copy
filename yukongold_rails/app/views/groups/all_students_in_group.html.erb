@@ -1,0 +1,118 @@
+<div class="container-fluid">
+    <div id="links" class="row col-xs-12"> 
+            <%= button_to('Back', groups_manage_groups_path, :class => 'btn btn-primary btn-padded pull-right')  %> 
+            <% if @group_name!= nil%>
+            <h3 id="blue-text"><%=@group_name%></h3>
+            <%end%>
+            <% if @group.description!= nil%>
+            <p><%=@group.description%></p>
+            <%end%>
+    </div>
+
+    <div class="row col-xs-12">
+        <table id="student-group-table" class="table table-hover table-condensed">
+    <!-- STUDENTS IN GROUP -->
+            <thead>
+                <tr class="noborder">
+                    <th colspan="3"><h4>Students in group</h4><h6>(Refresh page for alphabetized list)</h6></th>
+
+                </tr>  
+                <tr>
+                    <th>Student Name</th>
+                    <th>C</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+                <%if @students_in_groups != nil %>  
+                    <% @students_in_groups.each do |student| %>
+                        <tr>
+                            <td id="name">
+                                <% if student.last_name != nil %>
+                                    <%=student.first_name + " " + student.last_name%>
+                                <%else %>
+                                    <%=student.first_name%>
+                                <%end%>
+
+                            </td>
+                            <td>
+                                <% if student.category_name != nil %>
+                                    <%=student.category_name%>
+                                <%end%>    
+                            </td>
+                            <td>          
+                                    <%=link_to "/groups/#{student.students_groups_id}/delete_students_groups", :method => :delete, remote: true, class:"btn btn-default btn-xs delete_students_groups_test" do %>
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    <%end%>
+                            </td>
+                        
+                        </tr>
+                    <%end%>
+                <%end%>
+
+            
+        </table>                    
+
+        <!-- All Students -->
+        <table id="all-students-table" class="table table-hover table-condensed">
+                <thead>
+                    <tr class="noborder">
+                        <th colspan="3"><h4>All students</h4><h6>(Refresh page for updated/alphabetized list)</h6></th>
+                    </tr>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>C</th>
+                        <th>Add</th>
+                    </tr>
+                </thead>
+                    <%@students.each do |student|                                   
+                        sg = student.students_groups.where(group_id: @group_id)
+                        if (sg.length == 1) then
+                            sg = sg.first
+                        else
+                            sg = nil
+                        end
+
+                        if sg == nil%>
+                            <tr>
+                                <td id="name">
+                                    <% if student.last_name != nil %>
+                                        <%=student.first_name.capitalize + " " + student.last_name.capitalize%>
+                                    <%else %>
+                                        <%=student.first_name.capitalize%>
+                                    <%end%>    
+                                </td>
+                                <td>
+                                    <% if student.category_type.name != nil %>    
+                                        <%=student.category_type.name%>
+                                    <%end%>
+                                </td>
+                                <td>                     
+                                    <%= form_for(@students_groups, :url => {:action => "update_students_in_group"}, remote: true) do |f| %>
+                                        
+                                                <%= f.hidden_field :group_id, :value => @group_id %>
+                                                <%= f.hidden_field :student_id, :value => student.id %>
+                                            
+                                             <div id="scheduled_btn" class="btn">
+                                                <%= button_tag(type: 'submit', class: "btn btn-default btn-xs test23") do %>
+                                                    <i class="glyphicon glyphicon-ok"></i>
+                                                <%end%>                                              
+                                            </div>                              
+                                    <%end%>
+                                </td>
+                             </tr> 
+                        <%else%>        
+                        <%end%>
+                    <%end%>
+            </table>    
+        </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(".test23").click(function(){
+        $(this).closest('tr').hide();
+    });
+
+</script>    
+

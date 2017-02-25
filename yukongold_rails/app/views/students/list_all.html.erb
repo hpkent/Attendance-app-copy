@@ -1,0 +1,104 @@
+<div class="container-fluid nopadding">
+    <div class="row col-xs-12 col-md-8 ">
+        <div class="col-xs-6 previous">
+            <h4>All Students</h4>
+        </div>
+        <div id= "links" class="actions col-xs-6 next">
+            <%= button_to('Back', students_attendance_path, :class => 'btn btn-primary pull-right btn-padded')  %>
+        </div>
+    </div>
+	<div class="row col-xs-12 col-md-8 ">
+			<table id="student-table" class="table table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>C</th>
+						<th>Change Student Status</th>
+					</tr>
+                </thead>	
+                <% @students.each do |student| %>
+    		    <%  
+                    ar = student.students_sittings.where(sitting_id: @sitting_id)
+                    if (ar.length == 1) then
+                      ar = ar.first
+                      ar = ar.attendance_status_type.name
+                    else
+                      ar = nil
+                    end
+                %>
+                <tr>
+                    <%if ar == "absent" || ar == nil %>
+						<td id="name">
+                            <% if student.last_name != nil %>
+                                <%=student.first_name + " " + student.last_name%>
+                            <% else %>
+                                <%=student.first_name%>
+                            <%end%>    
+                        </td>
+						<td>
+                            <% if student.category_type.name != nil %>
+                                <%=student.category_type.name[0,1]%>
+                            <%end%>    
+                        </td>
+                        <td>    
+                            <%= form_for(@students_sittings, :url => {:action => "update_list_all_student"}, remote:true) do |f| %>
+                            <div class="field">
+                                <%= f.hidden_field :sitting_id, :value => @sitting_id %>
+                                <%= f.hidden_field :student_id, :value => student.id %>
+                                <%= f.hidden_field :attendance_status_type_id, :value => @attendance_status_type_id_present%>
+                            </div>
+                            <div id= "buttonId" class="actions col-xs-6">
+                                <%= f.submit "Attending", class:"btn btn-default center-block btn-xs test23" %>
+                           
+                            <%end%>
+                            </div>
+                            <%= form_for(@students_sittings, :url => {:action => "update_list_all_student"}, remote:true) do |f| %>
+                            <div class ="field">
+                                <%= f.hidden_field :sitting_id, :value => @sitting_id %>
+                                <%= f.hidden_field :student_id, :value => student.id %>
+                                <%= f.hidden_field :attendance_status_type_id, :value => @attendance_status_type_id_scheduled%>
+                            </div>
+                            <div id= "buttonId" class="actions col-xs-6">
+                                <%= f.submit "Expected", class:"btn btn-default center-block btn-xs test23 " %>
+                            </div>
+                            <%end%>
+                            
+                    <%end%>
+                <%end%>
+                    </td>      	
+                </tr>    
+            </table>	
+	    </div>
+    </div>
+</div>
+
+<!-- Javascript -->
+
+<script type="text/javascript">
+ 
+    $(".test23").click(function(){
+        $(this).closest('tr').hide();
+    });
+
+</script>
+
+<!--<script>
+
+
+//   $(document).ready(function() {
+
+//     //   $('.btn').on('click',function(){
+//     //     !$(this).hasClass('buttonClicked') ? addClass('buttonClicked') : '';
+//     //   });
+
+
+//     // //     $(".btn").click(function(){
+//     // //         $("div").hide();
+//     // //     });
+//     // // });
+
+//       $('.btn').click(function(){
+//           $(this).css("background-color", "#FFC0CB");
+//       });
+//   });
+// </script>

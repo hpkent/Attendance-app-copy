@@ -1,0 +1,54 @@
+<div class="container-fluid">
+    <div class="row col-xs-12">
+        <div id= "links" class="actions">
+          <div>
+            <%= button_to('New Meeting', meetings_new_other_meeting_path, :class => 'btn btn-primary pull-right btn-padded')  %>
+          </div>
+        </div>
+
+    </div>
+
+    <div class="row col-xs-12">
+      <table class="table table-hover table-condensed">
+        <thead>
+            <tr class="noborder">
+                <th colspan="5"><h3>View Meetings</h3></th>
+                <p> This table contains a list of meetings occuring outside the regular sittings schedule. It can also be used to record a high volume of meetings.</p>
+            </tr>
+            <tr>
+                <th>Student Name</th>
+                <th>Date</th>
+                <th>Monastic Seen</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+          <% @other_meetings.each do |meeting| %>
+            <tr> 
+              <td id="name">
+                <% if meeting.last_name != nil %>
+                  <%=meeting.first_name + " " + meeting.last_name%>
+                <%else %>
+                  <%=meeting.first_name%>
+                <%end%>
+              </td>
+              <td>
+                <% if meeting.start_date != nil %>
+                  <%=meeting.start_date%>
+                <%end%>
+              </td>
+              <td>
+                <% if meeting.monastic_id != nil %>
+                  <%=meeting.monastic_title + " " + meeting.monastic_first_name + " " + meeting.monastic_last_name%>
+                <%end%>
+              </td>
+              <td><%= button_to('Edit', "#{meeting.id}/edit_other_meeting", :class => 'btn btn-secondary btn-sm')%>
+              </td>
+              <td><%= button_to('Delete', "/meetings/#{meeting.id}/delete_other_meeting", :method => :delete,
+                      data: { confirm: 'Are you sure?' }, :class => 'btn btn-secondary btn-sm')%>
+              </td>
+            </tr>
+          <%end%>
+      </table>    
+    </div>
+</div>

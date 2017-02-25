@@ -1,0 +1,192 @@
+<div class="container-fluid nopadding">
+    <div id="links" class="col-xs-12">
+        <%= button_to('Back', students_attendance_path, :class => 'btn btn-primary btn-padded pull-right')  %>
+        <%= button_to('Home', sittings_select_sitting_path, :class => 'btn btn-primary btn-padded pull-right')  %>
+    </div>     
+    <div class="col-xs-12">
+        <h2>Sitting Attendance</h2>
+    </div>
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading" id="light-blue">
+            <h4 class="panel-title" id="blue-text"><%="#{@sitting_event_title} - #{@sitting_start_date}"%>
+            </h4>
+          </div>
+          <div class="panel-body">
+            <div class="col-xs-12">    
+                <% if @current_note != nil %>
+                <p><%=@current_note.content%></p>
+                <%end%>
+            </div>    
+            <div class="col-xs-12">
+                <%=form_for(@sitting, :url => {:controller => "sittings", :action => "update"}, :html => {:class => "form-inline", :id => "no_meeting_flag"}, remote: true) do |f| %>
+                    <%= f.label :no_meeting_flag, 'No one seen' %>
+                     
+                     <%=f.hidden_field :start_date, :value => @sitting.start_date%>
+                     <%=f.hidden_field :start_time, :value => @sitting.start_time%>
+                     <%if @sitting.no_meeting_flag == true %>
+
+                        <%= f.check_box :no_meeting_flag, options = {:checked => true, :class => "checkbox"} %>
+                     <%else%>
+                        <%= f.check_box :no_meeting_flag, options = {:checked => false, :class => "checkbox"} %>
+                     <%end%>
+                <%end%>        
+            </div>
+        </div>
+    </div>    
+    <div class="col-xs-12">
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr class="noborder">
+                      
+                    <% @i = 0    
+                    @attending_students.each do |student|
+                      @i += 1
+                    end%>  
+                        <p class="norm">Number of students: <%=@i%></p>
+                </tr>           
+                <tr>
+                    <th class="norm">Name</th>
+                    <th id="th-align" class="norm">Notes</th>
+                    <th id="th-align" class="norm">Hatto</th>
+                    <th id="th-align" class="norm">#Days</th>
+                    <th id="th-align" class="norm">To see</th>
+                </tr>
+            </thead>          
+                    <% @attending_students.each do |student| %>
+                <tr>
+                    <td class="norm">
+                   
+                   
+            
+                                <% if student.last_name != nil %>
+                                    <%=student.first_name + " " + student.last_name%>
+                                <%else %>
+                                    <%=student.first_name%>
+                                <%end%>  
+                                <% if student.bench == true %>
+                                
+                                   <%=image_tag("bench.png", size:"20", class:"bench")%>
+                            
+                                 <%end%>
+                                
+                        
+                    </td>
+                    <td id="td-align" class="norm">
+                         <% if student.special_status != nil
+                                if student.special_status == "retreat"%>
+                                    <%="retreat (#{student.acceptance_date})"%>
+                                <%else%>
+                                <%=student.special_status%>
+                                <%end%>
+                        <%end%>
+                    </td>
+                    <td id="td-align" class="norm">
+                         <% if student.hatto != nil && student.hatto != 0 %>
+                            <i class="glyphicon glyphicon-ok"></i>
+                        <%end%>
+                    </td>
+
+                    <td id="td-align" class="norm">  
+                            <%if student.days_since_last_seen.nil? %>
+                                <%=100%>
+                            <%else%>
+                            <%= student.days_since_last_seen %>
+                            <%end%>    
+                    </td>
+                    <td>
+                        <div id="center">
+                        <div class="btn-group" role="group">            
+                        <%  @id = student.meeting_id
+                            if Meeting.where(id:@id).exists?
+                                @meeting = Meeting.find(@id).monastic_id
+                                @monastic = Monastic.find(@meeting).initials
+                        %>
+                        <div id="btn-correction" class="btn btn-xs disabled">  
+                                <%=@monastic %>   
+                        </div>
+
+                     
+                        <div id="scheduled_btn" class="btn">
+                                <%=link_to "/meetings/#{student.id}/new", class:"btn btn-default btn-xs" do%>
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                <%end%>
+                                <%=link_to "/meetings/#{student.meeting_id}/destroy", :method => :delete, class:"btn btn-default btn-xs" do %>
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                <%end%>
+                        </div>  
+                        <%else%>
+                        <div id="scheduled_btn" class="btn">
+                            <%=link_to "/meetings/#{student.id}/new", class:"btn btn-default btn-xs" do%>
+                                <i class="glyphicon glyphicon-edit"></i>
+                            <%end%>
+                        </div>
+                        <%end%>
+                    </td>
+                    <%end%>
+                </tr>
+                <tr>
+                    <% @attending_monastics.each do |student| %>
+                <tr>
+                    <td class="norm">
+                                <% if student.last_name != nil %>
+                                    <%=student.first_name + " " + student.last_name%>
+                                <%else %>
+                                    <%=student.first_name%>
+                                <%end%>  
+                                <% if student.bench == true %>
+                                
+                                   <%=image_tag("bench.png", size:"20", class:"bench")%>
+                            
+                                 <%end%>
+                                
+                        
+                    </td>
+                    <td id="td-align" class="norm">
+                         <% if student.special_status != nil %>
+                                <%=student.special_status%>
+    
+                         <%end%>
+                    </td>
+                    <td id="td-align" class="norm">
+                         <% if student.hatto != nil && student.hatto != 0 %>
+                            <i class="glyphicon glyphicon-ok"></i>
+                        <%end%>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <%end%>    
+        </table>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+   $(function(){
+        $('.checkbox').on('change',function(){
+            $('#no_meeting_flag').submit();
+        });
+    });
+
+     $(function(){
+        $('.checkbox').on('change',function(){
+            $('.no_meeting_flag').submit();
+        });
+    });
+
+
+// $(function(){
+//     $( "input[type=checkbox]" ).on("change", function(){
+//         $('.no_meeting_flag').submit();
+//         if($(this).is(':checked'))
+//             $(this).parent().css('background-color', '#cd0000');
+//         else
+//             $(this).parent().css('background-color', '');
+//     });
+// });
+
+</script>

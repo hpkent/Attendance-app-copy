@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div id="links" class="row col-xs-8">
+        <%= button_to('Back', meetings_show_other_path, :class => 'btn btn-primary pull-right btn-padded')  %>
+    </div>
+    <div class="row col-xs-8">
+        <h2> Meeting information </h2>
+        <div class="field col-xs-12">
+            <span class="form-edits">Student:</span>
+            <span class="form-edits-s"><%=display_name%></span>
+        </div>
+
+          <%= form_for(@other_meeting, :url=> {:action=> "update" }) do |f| %>
+            <div class="field">          
+                <%= f.hidden_field :meeting_type_id, :value => @other_meeting_type%>
+            </div>    
+            <div class="field col-xs-3">
+                <%= f.hidden_field :student_id %>
+            </div>
+
+            <div class="field col-xs-12">    
+                <%= f.label :start_date, "Meeting Date" %>
+                <%= f.date_select :start_date %>
+            </div>
+            <div class="field col-xs-12">    
+                <%= f.label :monastic_id, "Monastic" %>
+                <%= f.collection_select(:monastic_id, Monastic.all, :id, :monastic_name, {:class =>'form-control'}) %>                            
+            </div>        
+            <div id= "buttonId" class="actions col-xs-12 text-left">
+                <%= f.submit "Submit", class:"btn btn-default btn-xs" %>  
+            </div>
+          <%end%>
+        
+    </div>
+</div>

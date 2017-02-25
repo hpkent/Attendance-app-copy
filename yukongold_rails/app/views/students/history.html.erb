@@ -1,0 +1,63 @@
+<div class="container-fluid">
+    <div id="links" class="row col-xs-8">
+        <%= button_to('Back', students_manage_students_path, :class => 'btn btn-primary pull-right btn-padded')  %>
+    </div>
+    <div class="row col-xs-8">
+        <div>
+            <h2> History - <%=display_name%></h2>
+        </div>
+        <div>
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr class="noborder">
+                        <th colspan="3"><h3>Recent meetings</h3>
+                    </tr>           
+                    <tr>
+                      <th> Date</th>
+                      <th> Sitting </th>
+                      <th> Monastic </th>
+                    </tr>
+                </thead>
+                    <%if @show_meetings.length > 0%>
+                        <% @show_meetings.each do |meeting| %>   
+                            <tr>
+                            <%if meeting.start_date != nil%>
+                                <td><%=meeting.start_date.strftime("%A, %B %-d, %Y")%></td>
+                            <%end%>
+                            <%if meeting.event_title != nil%>    
+                                <td><%=meeting.event_title%></td>
+                            <%else%>
+                                <td>N/A</td>
+                            <%end%>    
+                            <%if meeting.initials != nil%>        
+                                <td><%=meeting.initials%></td>
+                            <%end%>    
+                            </tr>
+                        <%end%>         
+                    <%end%>
+                <thead>
+                    <tr class="noborder">
+                        <th colspan="3"><h3>Recently attended sittings</h3>
+                    </tr>           
+                    <tr>
+                      <th> Date</th>
+                      <th> Sitting </th>
+                      <th></th>
+                    </tr>
+                </thead>
+                    <%if @show_attendance.length > 0%>
+                        <% @show_attendance.each do |attendance| %>   
+                            <tr>
+                            <%if attendance.start_date != nil%>
+                                <td><%=attendance.start_date.strftime("%A, %B %-d, %Y")%></td>
+                            <%end%>
+                            <%if attendance.event_title != nil%>    
+                                <td><%=attendance.event_title%></td>
+                            <%end%>
+                                <td></td>
+                            </tr>
+                        <%end%>         
+                    <%end%>
+            </table>    
+        </div>
+    </div>

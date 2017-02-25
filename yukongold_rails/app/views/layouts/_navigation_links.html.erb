@@ -1,0 +1,20 @@
+<%# add navigation links to this file %>
+
+<% if user_signed_in? %>
+    <li class="nav-item"><%= link_to 'Home', sittings_select_sitting_path, class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to 'Record Attendance', students_home_path, class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to 'Manage Students', students_manage_students_path, class: 'nav-link'%></li>
+    <li class="nav-item"><%= link_to 'Manage Groups', groups_manage_groups_path, class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to 'Record Special Meetings', meetings_show_other_path, class: 'nav-link' %></li>
+    <li class="nav-item"><%= link_to 'Sign out', destroy_user_session_path, :method=>'delete', class: 'nav-link' %></li>
+<% else %>
+    <li><%= link_to 'Sign in', new_user_session_path %></li> 
+    <!-- <li><%= link_to 'Sign up', new_user_registration_path %></li>  -->
+<% end %>
+<% if user_signed_in? %>
+
+  <% if current_user.admin? %>
+    <!-- <li><%= link_to 'Admin', '/admin' %></li>  -->
+    <!-- <li><%= link_to 'Users', users_path %></li> -->
+  <% end %>
+<% end %>
