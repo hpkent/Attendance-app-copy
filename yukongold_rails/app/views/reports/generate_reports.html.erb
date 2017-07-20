@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <div class="col-xs-12">
+
+    <div id="links" class="row col-xs-12">
+            <%= button_to('Download Excel Document', reports_excel_path(format: 'xlsx'), :class => 'btn btn-primary buttoncolour pull-right')%>
+    </div>
+
+       
+    <table id="student-group-table" class="table table-condensed">
+
+      <thead>
+        <tr class="noborder">
+            <th colspan="4"><h4>Attendance Report</h4></th>
+
+        </tr>  
+        <tr>
+            <th>Sitting Start Date</th>
+            <th>Sitting End Date</th>
+            <th>Sitting Title </th>
+            <th>Student Name </th>
+        </tr>
+      </thead>
+        <%if @student_sittings_report != nil %>  
+          <% @student_sittings_report.each do |record| %>
+            <tr>
+              <td id="name">
+                <%=record.sitting_start_date%>
+              </td>
+              <td id="name">
+                <%=record.sitting_end_date%>
+              </td>
+              <td id="name">
+                <%=record.sitting_event_title%>
+              </td>
+              <td id="name">
+                <% if record.student_last_name != nil %>
+                    <%=record.student_first_name + " " + record.student_last_name%>
+                <%else %>
+                    <%=record.student_first_name%>
+                <%end%>
+              </td>
+            </tr>
+          <%end%>
+        <%end%>
+    </table>                   
+  </div>
+</div>

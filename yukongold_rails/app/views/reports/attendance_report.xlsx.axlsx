@@ -1,0 +1,35 @@
+require 'axlsx'
+
+wb = xlsx_package.workbook
+
+wb.styles do |s|
+
+    black_cell = s.add_style :bg_color => "d9d9d9", :fg_color => "00", :sz => 14, :alignment => { :horizontal=> :left}
+
+    heads = ['Date','Title','Name', 'Seen By']
+
+    style = []
+
+    heads.each do |h|
+        style << black_cell
+    end
+
+    wb.add_worksheet(name: "Attendance Report") do |sheet|
+      sheet.add_row heads, :style => style
+
+        @student_sittings_report.each do |record|
+           
+            if record.student_last_name != nil && record.monastic_initials !=nil
+                sheet.add_row [record.sitting_start_date, record.sitting_event_title, record.student_first_name + " " + record.student_last_name, record.monastic_initials], :height => 15
+            elsif record.student_last_name != nil
+               sheet.add_row [record.sitting_start_date, record.sitting_event_title, record.student_first_name + " " + record.student_last_name], :height => 15    
+            elsif record.monastic_initials !=nil
+                sheet.add_row [record.sitting_start_date, record.sitting_event_title, record.student_first_name, record.monastic_initials], :height => 15
+            else
+                sheet.add_row [record.sitting_start_date,record.sitting_event_title, record.student_first_name], :height => 15
+            end
+        end
+       sheet.column_widths 15, 20, 25, nil
+    end
+end
+

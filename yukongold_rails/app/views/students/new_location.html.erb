@@ -1,46 +1,46 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="Room"</h2>
-            </div>
-            <div id= "links" class="actions col-xs-6 next">
-                <%= button_to('Back', students_attendance_path, :class => 'btn btn-primary btn-padded pull-right')%>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-     <div class="col-xs-12 col-md-8">
-        <table class="table table-hover table-condensed">
+   <div class="row">
+      <div class="Room"</h2>
+         </div>
+         <div id= "links" class="actions col-xs-6 next">
+            <%= button_to('Back', students_attendance_path, :class => 'btn btn-primary btn-padded pull-right')%>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-xs-12 col-md-8">
+         <table class="table table-condensed">
             <thead>
-                <tr class="noborder">
-                    <th colspan="3"><h3>Attending students</h3></th>
-                </tr>   
-                <tr>
-                    <th>Name</th>
-                    <th>Room</th>
-                </tr>
+               <tr class="noborder">
+                  <th colspan="3"><h3>Attending students</h3></th>
+               </tr>   
+               <tr>
+                  <th>Name</th>
+                  <th>Room</th>
+               </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <%=display_name%>
-                    </td>
-                    <td>   
-                   <%= form_for(@students_sittings, :url=>{:action=>"update_location"}) do |f| %>
-                    <div class="field">
-                            <%= f.hidden_field :sitting_id, :value => @sitting_id %>
-                            <%= f.hidden_field :student_id, :value => @student_id %>
-                    </div>
-                    <%= f.label "Select group" %>
-                    <%= f.collection_select(:location_type_id, LocationType.all, :id, :name) %>
-                    <div id= "buttonId" class="actions">
-                        <%= f.submit "Submit", class:"btn btn-sm center-block" %>
-                    </div>
-                    <%end%>        
-                    </td>
-                    <td>    
-                </tr>
-                   
+               <tr>
+                  <td>
+                     <%=display_name%>
+                  </td>
+                  <td>   
+                  <%= form_for(@students_sittings, :url=>{:action=>"update_location"}) do |f| %>
+                  <div class="field">
+                     <%= f.hidden_field :sitting_id, :value => @sitting_id %>
+                     <%= f.hidden_field :student_id, :value => @student_id %>
+                  </div>
+                     <%= f.label "Select group" %>
+                     <%= f.collection_select(:location_type_id, LocationType.all, :id, :name) %>
+                  <div id= "buttonId" class="actions">
+                     <%= f.submit "Submit", class:"btn btn-sm center-block" %>
+                  </div>
+                  <%end%>        
+                  </td>
+                  <td>    
+               </tr>    
             </tbody>
-        </table>
-    </div>
+         </table>
+      </div>
+   </div>
 </div>

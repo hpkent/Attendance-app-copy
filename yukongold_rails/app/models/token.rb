@@ -2,7 +2,7 @@ require 'net/http'
 require 'json'
  
 class Token < ActiveRecord::Base
- 
+
   def to_params
     {'refresh_token' => refresh_token,
     'client_id' => Rails.application.secrets.client_id,
@@ -35,12 +35,10 @@ class Token < ActiveRecord::Base
     end
   end
 
-
   # def refresh_access_token
   #   refresh! if expired?
   #   access_token
   # end
- 
 end
 
 

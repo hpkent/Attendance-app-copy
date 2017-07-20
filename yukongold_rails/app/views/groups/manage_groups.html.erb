@@ -1,42 +1,41 @@
 <div class="container-fluid">
-    <div class="row col-xs-12">
-        <div id= "links" class="actions">
-            <div>
-              <%= button_to('New Group', new_group_path, :class => 'btn btn-primary pull-right btn-padded')  %>
-           </div>
-        </div>
-    </div>
-    <div class="row col-xs-12">
-            <table id="student" class="table table-hover table-condensed">
-                <thead>
-                    <tr class="noborder">
-                        <th colspan="5"><h3>Manage groups</h3></th>
-                    </tr>
-                    <tr>
-                        <th>Group Name</th>
-                        <th>Edit Group Info</th>
-                        <th>Edit Group Members</th>
-                        <th>Delete Group</th>
-                    </tr>
-                </thead>    
-                    <% @groups.each do |group| %>
-                <tr>
-                    <td id="name"><%=group.name %>
-                    </td>
-                     <td>
-                        <%= link_to 'Edit Info', "/groups/#{group.id}/edit" %>
-                    </td>
-                    <td>
-                        <%= link_to 'Edit Members', "/groups/#{group.id}/all_students_in_group" %>
-                    </td>
-                    <td>    
-                        <%= link_to 'Delete', "/groups/#{group.id}/delete_group",
-                        :method => :delete,
-                        data: { confirm: 'Are you sure?' } %>
-                    </td>  
-                    <%end%>
-                </tr>
-            </table>    
-        </div>
-    </div>
+   <div class="row col-xs-12">
+      <div id= "links" class="actions">
+         <div>
+           <%= button_to('New Group', new_group_path, :class => 'btn btn-primary pull-right btn-padded')  %>
+         </div>
+      </div>
+   </div>
+   <div class="row col-xs-12">
+      <table id="student" class="table table-condensed">
+         <thead>
+            <tr class="noborder">
+               <th colspan="5"><h3>Manage groups</h3></th>
+            </tr>
+            <tr>
+               <th>Group Name</th>
+               <th>Edit Group Info</th>
+               <th>Edit Group Members</th>
+               <th>Delete Group</th>
+            </tr>
+         </thead>    
+            <% @groups.each do |group| %>
+         <tr>
+            <td id="name"><%=group.name %>
+            </td>
+            <td>
+               <%= link_to 'Edit Info', "/groups/#{group.id}/edit" %>
+            </td>
+            <td>
+               <%= link_to 'Edit Members', "/groups/#{group.id}/all_students_in_group" %>
+            </td>
+            <td>    
+               <%= link_to 'Delete', "/groups/#{group.id}/delete_group",
+               :method => :delete,
+               data: { confirm: 'Are you sure?' } %>
+            </td>  
+              <%end%>
+         </tr>
+      </table>    
+   </div>
 </div>

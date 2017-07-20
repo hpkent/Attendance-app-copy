@@ -1,60 +1,60 @@
 <div class="container-fluid nopadding">
 	<div class="col-xs-12">
-        <h2>Record Attendance</h2>
-    </div>
-    <div class="col-xs-12">
+      <h2>Record Attendance</h2>
+   </div>
+   <div class="col-xs-12">
 		<div class="panel panel-default">
-	      	<div class="panel-heading" id="light-blue">
-		        <h4 class="panel-title" id="blue-text"><%=@sitting_event_title + " - " + @sitting_start_date%></h4>
-	      	</div>
-	      	<div class="panel-body">
-	            <% if @current_note != nil %>
-					<p><%=@current_note.content%></p>
-				<div class="prev">
-					<%= button_to('Edit', edit_note_path(@current_note.id), :class => 'btn btn-secondary btn-grey-padded btn-sm pull-right')%>
-				</div>
-				<div class="next">
-					<%= button_to('Delete', "/notes/#{@current_note.id}/destroy", 
-						:method => :delete,
-	                    data: { confirm: 'Are you sure?' }, :class => 'btn btn-secondary btn-sm pull-right')%>
-	            </div>
-				<%else%>
-				<%= button_to('New Note', new_note_path, :class => 'btn btn-secondary btn-grey-padded btn-sm pull-right')%>
-				<%end%>		
-	        </div>
-		</div>
+      	<div class="panel-heading" id="light-blue">
+	         <h4 class="panel-title" id="blue-text"><%=@sitting_event_title + " - " + @sitting_start_date%></h4>
+      	</div>
+      	<div class="panel-body">
+            <%if @current_note != nil %>
+				<p><%=@current_note.content%></p>
+			   <div class="prev">
+				  <%= button_to('Edit', edit_note_path(@current_note.id), :class => 'btn btn-secondary btn-grey-padded btn-sm pull-right')%>
+			   </div>
+			   <div class="next">
+				   <%= button_to('Delete', "/notes/#{@current_note.id}/destroy", 
+					:method => :delete,
+                    data: { confirm: 'Are you sure?' }, :class => 'btn btn-secondary btn-sm pull-right')%>
+            </div>
+			      <%else%>
+			         <%= button_to('New Note', new_note_path, :class => 'btn btn-secondary btn-grey-padded btn-md pull-right')%>
+			      <%end%>		
+         </div>
+		 </div>
 	</div>
 	<div class="col-xs-12">
-		<%= button_to('View all students', students_list_all_path, :class => 'btn btn-secondary btn-grey-padded btn-sm pull-right')%>	
+		<%= button_to('View all students', students_list_all_path, :class => 'btn btn-secondary btn-grey-padded btn-md pull-right')%>	
 	</div>
-
 	<div class="col-xs-12">
 	 	<div class="panel panel-default">
-	      	<div class="col-xs-12 panel-heading" id="light-blue">
-	        	<div class="col-xs-12 col-sm-6">
-			 		 <%= form_for(@students_groups, :html => {:style => 'display: inline;'}, :url => {:action => "new_dropdown"}) do |f| %>
-			 		 	<%= f.label "Select group" %>
-			            <%= f.collection_select(:group_id, Group.all, :id, :name) %>
-			        	<div id= "buttonId" class="actions">
-			            	<%= f.submit "Submit", class:"btn btn-secondary btn-sm" %>
-			        	</div>
-			         <%end%>
-				</div>
-				<div class="col-xs-12 col-sm-6">
-					<%= form_for(@students_sittings, :url => {:action => "update_students_sitting_autocomplete"}) do |f| %>
-						<div class="field">
-						<%= f.label "Search for students" %>
-						<%= autocomplete_field_tag('Name', '', autocomplete_student_path, :id_element => "#students_sitting_student_id", class: "form-control", id:"name-search-autocomplete") %>
-						<%= f.hidden_field :sitting_id, :value => @sitting_id %>
-						<%= f.hidden_field :student_id %>
-						<%= f.hidden_field :attendance_status_type_id, :value => @attendance_status_type_id_present%>
-						</div>
-					<%end%>
-				</div>
-				
+      	<div class="col-xs-12 panel-heading" id="light-blue">
+        	<div class="col-xs-12 col-sm-6">
+		 		<%= form_for(@students_groups, :url => {:action => "new_dropdown"}, :html => {
+                     :class =>"select_student_group_form"} ) do |f| %>
+		 		   <%= f.label "Select group", :class => "select_student_group_form"%>
+		         <%= f.collection_select(:group_id, Group.all, :id, :name)%><br />
+		      <div id= "buttonId" class="actions">
+		         <%= f.submit "Submit", class:"btn btn-secondary btn-md" %>
+		      </div>
+		      <%end%>
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<%= form_for(@students_sittings, :url => {:action => "update_students_sitting_autocomplete"}, :html => {
+                     :class =>"select_student_group_form"}) do |f| %>
+					<div class="field">
+					<%= f.label "Search for students" %>
+					<%= autocomplete_field_tag('Name', '', autocomplete_student_path, :id_element => "#students_sitting_student_id", class: "form-control", id:"name-search-autocomplete") %>
+					<%= f.hidden_field :sitting_id, :value => @sitting_id %>
+					<%= f.hidden_field :student_id %>
+					<%= f.hidden_field :attendance_status_type_id, :value => @attendance_status_type_id_present%>
+					</div>
+				<%end%>
+			</div>
 			</div>
 		<!-- EXPECTED STUDENTS -->	
-	        <table class="table table-hover table-condensed" id="scheduled-table">         
+	         <table class="table table-condensed" id="scheduled-table">         
 				<thead>
 					<tr class="noborder">
 						<th colspan="4"><h3>Expected students</h3></th>
@@ -68,35 +68,32 @@
 						<% @scheduled_students.each do |student| %>
 					<tr>
 						<td class="norm">
-                            <div>
-                                <% if student.last_name != nil %>
-                                <%=student.first_name + " " + student.last_name%>
-                                <%else %>
-                                <%=student.first_name%>
-                                <%end%>
-                            </div>
-                        </td>    
+                     <div>
+                        <% if student.last_name != nil %>
+                        <%=student.first_name + " " + student.last_name%>
+                        <%else %>
+                        <%=student.first_name%>
+                        <%end%>
+                     </div>
+                  </td>    
 						<td>
 						<div id="center">
 							<div class="btn-group" role="group"> 
-							<%= form_for(@students_sittings, :url => {:action => "update_student_status"}, remote: true) do |f| %>
-		                    	
-		                        	<%= f.hidden_field :sitting_id, :value => @sitting_id %>
-		                       	 	<%= f.hidden_field :student_id, :value => student.id %>
-		                        	<%= f.hidden_field :attendance_status_type_id, :value => @attendance_status_type_id_present%>
-		                      	
-	                            <div id="scheduled_btn" class="btn">
-	                                <%= button_tag(type: 'submit', class: "btn btn-default btn-xs update_student_status test23") do %>
-	                                    <i class="glyphicon glyphicon-ok"></i>
-	                                <%end%>
-	                          
-	                            </div>
-	                        <%end%>
-	                            <div id="scheduled_btn" class="btn">
-	                                <%=link_to "/students/#{student.students_sittings_id}/cancel_attendance", :method => :delete, :remote =>:true, class: "btn btn-default btn-xs cancel_attendance" do %>
-	                                    <i class="glyphicon glyphicon-remove"></i>
-	                                <%end%>
-	                            </div>
+							<%= form_for(@students_sittings, :url => {:action => "update_student_status"}, remote: true) do |f| %>	
+                        <%= f.hidden_field :sitting_id, :value => @sitting_id %>
+                         	<%= f.hidden_field :student_id, :value => student.id %>
+                        <%= f.hidden_field :attendance_status_type_id, :value => @attendance_status_type_id_present%>
+                        <div id="scheduled_btn" class="btn">
+                          <%= button_tag(type: 'submit', class: "btn btn-default btn-xs update_student_status test23") do %>
+                              <i class="glyphicon glyphicon-ok"></i>
+                          <%end%>
+                        </div>
+                        <%end%>
+                           <div id="scheduled_btn" class="btn">
+                              <%=link_to "/students/#{student.students_sittings_id}/cancel_attendance", :method => :delete, :remote =>:true, class: "btn btn-default btn-xs cancel_attendance" do %>
+                                 <i class="glyphicon glyphicon-remove"></i>
+                              <%end%>
+                           </div>
 		              		</div>
 		              	</div>
 		              	</td>
@@ -106,7 +103,7 @@
 		        </table>     	
 
 		<!-- ATTENDING STUDENTS -->
-				<table class="table table-hover table-condensed" id="attending-table">
+				<table class="table table-condensed" id="attending-table">
 				<thead>
 					<tr>
 						<th colspan="5"><h3>Attending students</h3></th>
@@ -118,66 +115,62 @@
 						<th id="td-align" class="norm">Remove</th>
 					</tr>
 				</thead>
-					 <% @attending_students.each do |student| %>
-                    <tr>
-                        <td class="norm">
-                            <% if student.last_name != nil %>
-                            <%=student.first_name + " " + student.last_name%>
-                            <%else %>
-                            <%=student.first_name%>
-                            <%end%>
-                        <td id="td-align norm">
-                            <div id="center">
-                                <div class="btn-group" role="group">
-                                    <div id="btn-correction" class="btn btn-xs disabled">   
-                                    <% if student.special_status != nil%>
-                                            <%=student.special_status%>
-                                    <%end%>
-                                    </div>
-                                </div>
-                                <div id="scheduled_btn" class="btn">
-                                <%=link_to "/students/#{student.id}/new_special_status", class:"btn btn-default btn-xs" do%>
-                                    <i class="glyphicon glyphicon-edit"></i>
-                                <%end%>
-                                </div>
-                            </div>           
-                        </td>
-                        <td id="td-align norm">
-                            <div id="center">
-                                <%= form_for(@students_sittings_loc, :url => {:action => "update_location_status"}, :html => {:class => "loctype"}, remote: true) do |f| %>
-                                
-                                    <%= f.hidden_field :sitting_id, :value => @sitting_id %>
-                                    <%= f.hidden_field :student_id, :value => student.id %>
+					<% @attending_students.each do |student| %>
+                  <tr>
+                     <td class="norm">
+                        <% if student.last_name != nil %>
+                        <%=student.first_name + " " + student.last_name%>
+                        <%else %>
+                        <%=student.first_name%>
+               <%end%>
+                     <td id="td-align norm">
+                        <div id="center">
+                           <div class="btn-group" role="group">
+                              <div id="btn-correction" class="btn btn-xs disabled">   
+                                 <% if student.special_status != nil%>
+                                    <%=student.special_status%>
+                                 <%end%>
+                              </div>
+                           </div>
+                           <div id="scheduled_btn" class="btn">
+                              <%=link_to "/students/#{student.id}/new_special_status", class:"btn btn-default btn-xs" do%>
+                                 <i class="glyphicon glyphicon-edit"></i>
+                              <%end%>
+                           </div>
+                        </div>           
+                     </td>
+                     <td id="td-align norm">
+                        <div id="center">
+                           <%= form_for(@students_sittings_loc, :url => {:action => "update_location_status"}, :html => {:class => "loctype"}, remote: true) do |f| %>
+                             
+                              <%= f.hidden_field :sitting_id, :value => @sitting_id %>
+                              <%= f.hidden_field :student_id, :value => student.id %>
 
-                                <div id="scheduled_btn" class="btn">
-                                     <%
-                                     @students_sittings_check = StudentsSitting.where(sitting_id:@sitting_id,student_id:student.id).first_or_initialize 
-                                     if @students_sittings_check.hatto == true%>
-                                        <%= f.check_box :hatto, options = {:checked => true, :class => "checkbox"} %>
-                                     <%else%>
-                                        <%= f.check_box :hatto, options = {:checked => false, :class => "checkbox"} %>
-                                     <%end%> 
-                                </div>
-                                <%end%>
-                            </div>           
-                        </td>
-
-                        <td id="td-align">
-                             <%=link_to "/students/#{student.students_sittings_id}/cancel_attendance", :method => :delete, :remote => true, class:"btn btn-default btn-xs cancel_attendance" do %>
-                                    <i class="glyphicon glyphicon-remove"></i>
-                                <%end%>
-                        </td>
+                           <div id="scheduled_btn" class="btn">
+                              <%
+                              @students_sittings_check = StudentsSitting.where(sitting_id:@sitting_id,student_id:student.id).first_or_initialize 
+                              if @students_sittings_check.hatto == true%>
+                               <%= f.check_box :hatto, options = {:checked => true, :class => "checkbox"} %>
+                              <%else%>
+                               <%= f.check_box :hatto, options = {:checked => false, :class => "checkbox"} %>
+                              <%end%> 
+                           </div>
+                           <%end%>
+                        </div>           
+                     </td>
+                     <td id="td-align">
+                        <%=link_to "/students/#{student.students_sittings_id}/cancel_attendance", :method => :delete, :remote => true, class:"btn btn-default btn-xs cancel_attendance" do %>
+                           <i class="glyphicon glyphicon-remove"></i>
                         <%end%>
-                    </tr>   
-
-					
-				
+                     </td>
+                     <%end%>
+                  </tr>   
 			</table>
 		</div>
 	</div>
 	
 	<div id="links" class="row col-xs-12">
-				<%= button_to('Done', students_schedule_meetings_path, :class => 'btn btn-primary btn-padded pull-right')%>
+		<%= button_to('Done', students_schedule_meetings_path, :class => 'btn btn-primary btn-padded pull-right')%>
 	</div>
 </div>
 
@@ -191,14 +184,18 @@
 	});
 
     $(".test23").click(function(){
-    	$(this).closest('tr').hide();
+         $(this).closest('tr').addClass('selected_student_jquery').delay(2000).fadeOut(1);
     });
 
-    // $(".test23").click(function(){
-    //  $(this).closest('tr').addClass('input-disabled');
-    // });
+    // function delayedHide() {
+    //     timeoutID = window.setTimeout(slowHide,2000)
+    // }
 
-    $(function(){
+    // function slowHide() {
+    //     $(this).hide();
+    // }
+
+    $(function submitForm(){
         $('.checkbox').on('change',function(){
             $('.loctype').submit();
         });

@@ -16,7 +16,7 @@
 //= require autocomplete-rails
 //= require turbolinks
 //= require bootstrap-sprockets
-//= require wice_grid.js
+//= require bootstrap-datepicker
 //= require_tree .
 
 

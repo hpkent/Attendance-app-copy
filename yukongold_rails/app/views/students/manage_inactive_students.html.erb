@@ -1,40 +1,38 @@
 <div class="container-fluid">
-
-  <div id="links" class="row col-xs-12">
-        <%= button_to('Back', students_manage_students_path, :class => 'btn btn-primary btn-padded pull-right')%>
-  </div>
-
-    <div class="row col-xs-12">
+   <div id="links" class="row col-xs-12">
+      <%= button_to('Back', students_manage_students_path, :class => 'btn btn-primary btn-padded pull-right')%>
+   </div>
+   <div class="row col-xs-12">
       <table class="table table-hover table-condensed">
-        <thead>
+         <thead>
             <tr class="noborder">
-                <th colspan="5"><h3>Manage inactive students</h3></th>
+               <th colspan="5"><h3>Manage inactive students</h3></th>
             </tr>
             <tr>
-                <th>Student Name</th>
-                <th>Category</th>
-                <th>Edit</th>
+               <th>Student Name</th>
+               <th>Category</th>
+               <th>Edit</th>
             </tr>
-        </thead>
-          <% @students.each do |student| %>
+         </thead>
+            <% @students.each do |student| %>
             <tr> 
-              <td id="name">
-                <% if student.last_name != nil %>
-                  <%=student.first_name + " " + student.last_name%>
-                <%else %>
-                  <%=student.first_name%>
-                <%end%>
-              </td>
-              <td>
-                <% if student.category_type.name != nil %>
-                <%=student.category_type.name%>
-                <%end%>
-              </td>
-              <td>
-                <%= button_to('Edit', edit_student_path(student), :class => 'btn btn-secondary btn-sm')%>
-              </td>
+               <td id="name">
+                  <% if student.last_name != nil %>
+                     <%=student.first_name + " " + student.last_name%>
+                  <%else %>
+                     <%=student.first_name%>
+                  <%end%>
+               </td>
+               <td>
+                  <% if student.category_type.name != nil %>
+                     <%=student.category_type.name%>
+                  <%end%>
+               </td>
+               <td>
+                  <%= button_to('Edit', edit_student_path(student), :class => 'btn btn-secondary btn-sm')%>
+               </td>
             </tr>
-          <%end%>
+         <%end%>
       </table>    
-    </div>
+   </div>
 </div>

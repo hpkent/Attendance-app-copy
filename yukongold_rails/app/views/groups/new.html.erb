@@ -1,13 +1,9 @@
 <div class="container-fluid">    
-    <div id="links" class="row col-xs-12">
-        <%= button_to('Back', groups_manage_groups_path, :class => 'btn btn-primary pull-right btn-padded')  %>
-    </div>
-    <div class="row col-xs-8">
-
-
-    <h2> Add a new group </h2>
-
-    <%=render "group_form"%>
-     
-    </div>
+   <div id="links" class="row col-xs-12">
+     <%= button_to('Back', groups_manage_groups_path, :class => 'btn btn-primary pull-right btn-padded')  %>
+   </div>
+   <div class="row col-xs-8">
+      <h2> Add a new group </h2>
+      <%=render "group_form"%>
+   </div>
 </div>    

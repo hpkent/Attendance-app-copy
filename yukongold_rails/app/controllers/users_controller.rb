@@ -7,9 +7,7 @@ class UsersController < ApplicationController
   end
 
   def new
-    
     @user = User.new
-
     respond_to do |format|
       format.json { render :json => @user }   
       format.xml  { render :xml => @user }
@@ -19,9 +17,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(secure_params_new)
- 
     #@user.user! #set role to type :user
-
     if @user.save
       respond_to do |format|
         format.json { render :json => @user.to_json, :status => 200 }
@@ -47,9 +43,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    
     @user = User.find(params[:id])
-
     respond_to do |format|
       format.json { render :json => @user }   
       format.xml  { render :xml => @user }
@@ -76,19 +70,17 @@ class UsersController < ApplicationController
   end
 
   private
-
-  def admin_only
-    unless current_user.admin?
-      redirect_to :back, :alert => "Access denied."
+    def admin_only
+      unless current_user.admin?
+        redirect_to :back, :alert => "Access denied."
+      end
     end
-  end
 
-  def secure_params
-    params.require(:user).permit(:role)
-  end
+    def secure_params
+      params.require(:user).permit(:role)
+    end
 
-  def secure_params_new
-    params.require(:user).permit(:email,:password, :password_confirmation,:role)
-  end
-
+    def secure_params_new
+      params.require(:user).permit(:email,:password, :password_confirmation,:role)
+    end 
 end

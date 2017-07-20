@@ -20,10 +20,13 @@ gem 'upmin-admin'
 gem 'will_paginate', '~>3.0.5'
 gem 'will_paginate-bootstrap'
 gem 'colorize'
-gem 'wice_grid', '~> 3.4.12'
+# gem 'wice_grid', '~> 3.4.12'
 gem 'rails4-autocomplete'
 gem 'active_model_serializers'
 gem 'google-api-client', :require => 'google/api_client'
+gem 'axlsx', '2.1.0.pre'
+gem 'axlsx_rails'
+gem 'bootstrap-datepicker-rails'
 
 
 
@@ -38,10 +41,11 @@ gem 'nokogiri', '~>1.6'
 gem 'builder'
 gem 'hpricot'
 gem 'oauth'
-gem 'roo', '1.11.2'
+gem 'roo'
 gem 'google-spreadsheet-ruby'
 gem 'zip-zip'
 gem 'archive-zip'
+gem 'rubyzip', '~> 1.1.0'
 
 group :development do
   gem 'better_errors'
@@ -62,6 +66,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-rescue'
   gem 'rspec-rails'
+  gem 'rb-readline'
 end
 group :test do
   gem 'capybara'

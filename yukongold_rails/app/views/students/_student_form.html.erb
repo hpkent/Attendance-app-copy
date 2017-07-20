@@ -1,44 +1,39 @@
 <div class="well">
-
-  <%= form_for @student, :url=>{:action=>"update"} do |f|%>
-    <p>
+   <%= form_for @student, :url=>{:action=>"update"} do |f|%>
+   <p>
       <%= f.label :first_name %><br>
       <%= f.text_field :first_name %>
-    </p>
-   
-    <p>
+   </p>
+   <p>
       <%= f.label :last_name %><br>
-
-      
       <%= f.text_field :last_name %>
-    </p>
-     <p>
+   </p>
+   <p>
       <%= f.label "Category"%><br>
       <%= f.collection_select(:category_type_id, CategoryType.all, :id, :name, {:class =>'form-control'}) %>
-    </p>
-     <p>
+   </p>
+   <p>
       <%= f.label :acceptance_date %>
       <%= f.date_select :acceptance_date %>
-    </p>
-     <p>
+   </p>
+   <p>
       <%= f.label :email %><br>
       <%= f.text_area :email, :cols => "30", :rows => "3" %>
-    </p>
-     <p>
+   </p>
+   <p>
       <%= f.label :bench %><br>
       <%= f.check_box :bench %>
-    </p>
-     <p>
+   </p>
+   <p>
       <%= f.label :dietary_restrictions %><br>
       <%= f.text_area :dietary_restrictions, :cols => "30", :rows => "3" %>
-    </p>
-     <p>
+   </p>
+   <p>
       <%= f.label :other %><br>
       <%= f.text_area :other, :cols => "30", :rows => "3" %>
-    </p>
-
-    <div id= "buttonId" class="actions">
+   </p>
+   <div id= "buttonId" class="actions">
       <%= f.submit "Submit", class:"btn btn-primary btn-padded" %>
-    </div>
-  <% end %>
+   </div>
+   <% end %>
 </div> 

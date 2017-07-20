@@ -1,0 +1,16 @@
+wb.add_worksheet(name: "Attendance Report") do |sheet|
+      sheet.add_row heads, :style => style
+
+        @student_sittings_report.each do |record|
+           
+            if record.student_last_name != nil && record.monastic_initials !=nil
+                sheet.add_row [record.sitting_start_date, record.sitting_event_title, record.student_first_name + " " + record.student_last_name, record.monastic_initials], :height => 15
+            elsif record.student_last_name != nil
+               sheet.add_row [record.sitting_start_date, record.sitting_event_title, record.student_first_name + " " + record.student_last_name], :height => 15    
+            elsif record.monastic_initials !=nil
+                sheet.add_row [record.sitting_start_date, record.sitting_event_title, record.student_first_name, record.monastic_initials], :height => 15
+            else
+                sheet.add_row [record.sitting_start_date,record.sitting_event_title, record.student_first_name], :height => 15
+            end
+        end
+    end

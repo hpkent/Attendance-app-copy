@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
 
    
-   get '/home' => 'sittings#select_sitting'
+  get '/home' => 'sittings#select_sitting'
    # post '/home' => 'sittings#select_sitting'
 
   mount Upmin::Engine => '/admin'
-
 
   devise_for :users, :controllers => { registrations: 'users/registrations' }
   
@@ -25,7 +24,6 @@ Rails.application.routes.draw do
     end
   end
 
-  
  # users
   get "users/new" => "users#new", as: :users_new_user
   post "users/create_user" => "users#create", as: :users_create_user 
@@ -40,13 +38,16 @@ Rails.application.routes.draw do
   #sittings
   
   get '/sittings/refresh' => 'sittings#refresh'
+  post '/sittings/refresh' => 'sittings#refresh'
   # get '/sittings/create_calendar'  => 'sittings#create_calendar' 
   get '/sittings/update_calendar'  => 'sittings#update_calendar'
   get '/sittings/select_sitting'  => 'sittings#select_sitting'
   post '/sittings/select_sitting'  => 'sittings#select_sitting'
   post '/sittings/update_sitting' => 'sittings#update_sitting'
-  post '/sittings/update_sitting' => 'sittings#update_sitting'
+  get '/sittings/update_sitting' => 'sittings#update_sitting'
   post '/sittings/update' => 'sittings#update'
+  post '/sittings/view_past_sittings' => 'sittings#view_past_sittings'
+  get '/sittings/view_past_sittings' => 'sittings#view_past_sittings'
   
 
   #students
@@ -60,8 +61,6 @@ Rails.application.routes.draw do
   post '/students/update_student_status' => 'students#update_student_status'
   get '/students/autocomplete', to: 'students#autocomplete', as: 'autocomplete_student'
   # post '/students/js_add_student_to_sitting', to: 'students#js_add_student_to_sitting'
- 
-  
   get 'students/home' => 'students#home'
   get '/students/schedule_meetings' => 'students#schedule_meetings'
   post '/students/schedule_meetings' => 'students#schedule_meetings'
@@ -79,7 +78,6 @@ Rails.application.routes.draw do
   patch '/students/:id/update' => 'students#update'
   get '/students/update' => 'students#update'
   post '/students/update' => 'students#update'
-  
 
   #special_status
   get '/students/:student_id/new_special_status' => 'students#new_special_status'
@@ -88,7 +86,6 @@ Rails.application.routes.draw do
   #location
   post '/students/update_location_status' => 'students#update_location_status'
   
-
   #meetings
   post '/meetings/:meeting_id/delete_other_meeting' => 'meetings#delete_other_meeting'
   delete '/meetings/:meeting_id/delete_other_meeting' => 'meetings#delete_other_meeting'
@@ -118,7 +115,6 @@ Rails.application.routes.draw do
   get '/groups/update' => 'groups#update'
   post '/groups/update' => 'groups#update'
 
-
   #notes
   post '/notes/new' => 'notes#new'
   get '/notes/update' => 'notes#update'
@@ -126,8 +122,21 @@ Rails.application.routes.draw do
   post '/notes/:id/edit' => 'notes#edit'
   delete '/notes/:id/destroy' => 'notes#destroy'
 
+  #reports
+  get 'reports/generate_reports' => 'reports#generate_reports'
+  post 'reports/generate_reports' => 'reports#generate_reports'
+  post 'reports/new' => 'reports#new'
+  get 'reports/attendance_report' => 'reports#attendance_report'
+  post 'reports/attendance_report' => 'reports#attendance_report'
+  get 'reports/meeting_report' => 'reports#meeting_report'
+  post 'reports/meeting_report' => 'reports#meeting_report'
+  get 'reports/student_report' => 'reports#student_report'
+  post 'reports/student_report' => 'reports#student_report'
+
+
   # resources :sessions
   # resources :users
+  resources :reports
   resources :students
   resources :meetings
   resources :monastics

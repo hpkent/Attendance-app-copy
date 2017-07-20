@@ -1,55 +1,63 @@
 <div class ="container-fluid">
-
-    <div class="col-xs-12 col-md-5 well">
-        <h2>Select a Sitting</h2>
-        <h5>Please select a sitting from one of the two following lists:</h5>
-
-        <%= form_for(@students_sittings, :url => {:action => "update_sitting"}) do |f| %>
-            
-            <h4> Today's sittings</h4>
-            <div class="field">
-                <%= collection_select(:students_sittings, :sitting_id, @sitting, :id, :sitting_info) %>
+   <div class="col-xs-12 col-md-5 well">
+      <h2>Select a Sitting</h2>
+      <div class= "well">  
+         <h4 class="normheading"> Today's sittings</h4>
+         <h5 class =""> Date: <%=Date.today.strftime("%A, %B %-d, %Y")%></h5>
+         <%=form_tag(sittings_update_sitting_path, method:"get") do %>
+            <div class="field norm">
+               <%=select_tag "sitting_id", options_from_collection_for_select(@sitting, "id", "event_title") %>
             </div>
-            <div id= "buttonId" class="actions">
-                <%= f.submit "Submit", class:"btn btn-primary btn-padded" %>
-        <%end%> 
+            <div id="buttonId" class="actions">
+               <%=submit_tag "Submit", :class => "btn btn-primary btn-padded"%>
+         <%end%>    
             </div>
-        <%= form_for(@students_sittings, :url => {:action => "update_sitting"}) do |f| %>
-          <h4> All sittings</h4>
-            <div class="field">
-                <%= collection_select(:students_sittings, :sitting_id, @all_sittings, :id, :sitting_info) %>
-            </div>
-            <div id= "buttonId" class="actions">
-                <%= f.submit "Submit", class:"btn btn-padded btn-primary" %>
-        <%end%> 
-            </div>
+      </div>
+      <div class = "well">
+         <h4 class="normheading">Select a past or future sitting</h4>
+         <%=form_tag(sittings_view_past_sittings_path, method: "get") do %>
+         <div class="field norm">
+            <%= label_tag("date", "Date")%>
+            <%= text_field_tag :start_date %>
+         </div>
+         <div id= "buttonId" class="actions">
+            <%= submit_tag "Submit", :class =>"btn btn-primary btn-padded" %>
+         </div> 
+         <% end %>
+      </div>
+   </div>
 
-        <div class="btn">
-            <%=link_to 'Refresh Calendar Data', sittings_refresh_path, class:"btn btn-default btn-xs"%>
-        </div>
-    </div>
-
-    <div class="col-xs-12 col-md-6">
-
-    <div id="links" class="col-xs-12">
+   <div class="col-xs-12 col-md-6">
+      <div id="links" class="col-xs-12">
             <%=button_to 'Record special meetings', meetings_show_other_path, :class => "btn btn-primary btn-padded"%>
-    </div>
-
-    <div id="links" class="col-xs-12">
+      </div>
+      <div id="links" class="col-xs-12">
         <%=button_to 'Manage students', students_manage_students_path, :class => "btn btn-primary btn-padded"%> 
-    </div>
-
-    <div id="links" class="col-xs-12">
-        <%=button_to 'Manage groups', groups_manage_groups_path, :class => "btn btn-primary btn-padded" %> 
-    </div>
-    <div id="links" class="col-xs-12">
+      </div>
+      <div id="links" class="col-xs-12">
+        <%=button_to 'Manage groups', groups_manage_groups_path, :class => "btn btn-primary btn-padded" %>
+      </div>
+      <div id="links" class="col-xs-12">
+        <%=button_to 'Generate reports', new_report_path, :class => "btn btn-primary btn-padded" %> 
+      </div>
+      <div id="links" class="col-xs-12">
         <%=button_to 'Sign out', destroy_user_session_path, :method=>'delete', :class => "btn btn-primary btn-padded" %>
-    </div>
-
+      </div>
+      <div id="links" class="col-xs-12">
+        <%=button_to 'Refresh calendar data', sittings_refresh_path, :class =>"btn btn-secondary"%>
+      </div>
+   </div>
 </div>
 
 
+<script type="text/javascript">
 
+  $(function() {
+    $( "#start_date" ).datepicker();
+  })
+
+
+</script>
 
 
 

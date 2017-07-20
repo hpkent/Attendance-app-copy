@@ -1,24 +1,21 @@
 <%puts"testtesttest"%>
-
-        <% student = Student.find(@students_group.student_id)%>             
-     <tr>
-        <td id="name">
-             <% if student.last_name != nil %>
-                <%=student.first_name + " " + student.last_name%>
-            <%else %>
-                <%=student.first_name%>
-            <%end%>
-
-        </td>
-        <% if student.category_type_id!= nil%>
-        <td>
-            <%=student.category_type.name%>
-        </td>
-        <%end%>
-        <td>          
-        <%=link_to "/groups/#{@students_group.id}/delete_students_groups", :method => :delete, remote: true, class:"btn btn-default btn-xs delete_students_groups_test" do %>
-            <i class="glyphicon glyphicon-remove"></i>
-        <%end%>
-        </td>
-    
-    </tr>
+<%student = Student.find(@students_group.student_id)%>             
+<tr>
+   <td id="name">
+      <% if student.last_name != nil %>
+         <%=student.first_name + " " + student.last_name%>
+      <%else %>
+         <%=student.first_name%>
+      <%end%>
+   </td>
+   <% if student.category_type_id!= nil%>
+   <td>
+      <%=student.category_type.name%>
+   </td>
+   <%end%>
+   <td>          
+   <%=link_to "/groups/#{@students_group.id}/delete_students_groups", :method => :delete, remote: true, class:"btn btn-default btn-xs delete_students_groups_test" do %>
+   <i class="glyphicon glyphicon-remove"></i>
+   <%end%>
+   </td>
+</tr>

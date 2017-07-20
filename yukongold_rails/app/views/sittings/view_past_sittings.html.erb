@@ -1,0 +1,31 @@
+<div class ="container-fluid">
+   <div class="col-xs-5 col-md-5 well">
+      <h2>Select a Sitting</h2>
+      <table class="table table-condensed">
+         <thead>
+            <tr>
+               <th>Sitting</th>
+               <th>Select</th>
+            </tr>
+         </thead>    
+         <%@sittings.each do |sitting|%>
+            <tr>
+               <td>
+                  <%=sitting.event_title%> - 
+                  <%=sitting.start_date.strftime("%A, %B %-d, %Y")%>
+               </td>
+               <td>
+                  <div id="scheduled_btn" class="btn">
+                     <%=form_tag(sittings_update_sitting_path, :method => "get") do %>
+                        <%=hidden_field_tag "sitting_id", sitting.id%>
+                        <%=button_tag(type:'submit', class: "btn btn-default btn-xs") do %>
+                           <i class="glyphicon glyphicon-ok"></i>
+                        <%end%>
+                  </div>
+                     <%end%> 
+               </td>
+            </tr>
+         <%end%>
+</div>
+
+                                
